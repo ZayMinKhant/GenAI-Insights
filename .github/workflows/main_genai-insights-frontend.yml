@@ -33,6 +33,8 @@ jobs:
         tags: genaiacr1281.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_5bd701d5fb874e248d280ae0f1775be6 }}/genaiacr1281/frontend:${{ github.sha }}
         context: ./frontend
         file: ./frontend/Dockerfile
+        build-args: |
+          VITE_API_URL=${{ secrets.VITE_API_URL }}
 
   deploy:
     runs-on: ubuntu-latest
