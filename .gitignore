@@ -1,0 +1,58 @@
+# Node
+node_modules/
+dist/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Database
+*.db
+*.sqlite
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Coverage
+coverage/
+.nyc_output
+
+# Misc
+*.tgz
+.yarn-integrity
+
+# Sensitive files
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+
+**/.dockerignore 
+backend-settings.json
+frontend-settings.json
+azure-credentials.json
