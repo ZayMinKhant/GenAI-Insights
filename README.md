@@ -218,6 +218,42 @@ docker build -t genai-frontend .
 docker run -p 5173:80 genai-frontend
 ```
 
----
+## CI/CD Troubleshooting: GitHub Container Registry (GHCR) Authentication
+
+For public repositories, GitHub Actions cannot push Docker images to GHCR using the default GITHUB_TOKEN due to permission restrictions. You must create and use a Personal Access Token (PAT) as a secret named `CR_PAT`.
+
+### How to Create and Use a CR_PAT Secret
+1. **Generate a Personal Access Token (PAT):**
+   - Go to your GitHub account > Settings > Developer settings > Personal access tokens.
+   - Click **Generate new token** (classic or fine-grained).
+   - Select the following scopes:
+     - `write:packages`
+     - `read:packages`
+     - `repo` (if needed for private repos)
+   - Copy the generated token (you will not be able to see it again).
+
+2. **Add the PAT as a Secret:**
+   - Go to your repository > Settings > Secrets and variables > Actions.
+   - Click **New repository secret**.
+   - Name it `CR_PAT` and paste your token as the value.
+
+3. **Workflow Reference:**
+   - The workflow uses this secret to log in to GHCR:
+     ```yaml
+     - name: Log in to the GitHub Container Registry
+       uses: docker/login-action@v3
+       with:
+         registry: ghcr.io
+         username: ${{ github.actor }}
+         password: ${{ secrets.CR_PAT }}
+     ```
+
+### Common Errors
+- **Error: Password required**
+  - The `CR_PAT` secret is missing, empty, or not referenced correctly in the workflow.
+- **denied: permission_denied: write_package**
+  - The PAT does not have the correct scopes, or you are using the default `GITHUB_TOKEN` in a public repo.
+
+**Always re-run your workflow after adding or updating secrets.**
 
 For more details, see the workflow files in `.github/workflows/` or open an issue for help.
