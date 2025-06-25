@@ -31,7 +31,8 @@ jobs:
       with:
         push: true
         tags: genaiacr1281.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_5bd701d5fb874e248d280ae0f1775be6 }}/genaiacr1281/frontend:${{ github.sha }}
-        file: ./Dockerfile
+        context: ./frontend
+        file: ./frontend/Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
