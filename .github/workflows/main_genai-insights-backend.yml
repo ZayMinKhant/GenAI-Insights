@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://genaiacr1281.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_4f38cb0148a544e59d61d512017da47e }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_606f77ce38664559857e60ffb014a547 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername }}
+        password: ${{ secrets.AzureAppService_ContainerPassword }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: genaiacr1281.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_4f38cb0148a544e59d61d512017da47e }}/backend:${{ github.sha }}
+        tags: genaiacr1281.azurecr.io/${{ secrets.AzureAppService_ContainerUsername }}/backend:${{ github.sha }}
         context: ./backend
         file: ./backend/Dockerfile
 
@@ -48,5 +48,5 @@ jobs:
       with:
         app-name: 'genai-insights-backend'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_fa08f5bdbe1649b6bf1e1ce0a9d86d0a }}
-        images: 'genaiacr1281.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_4f38cb0148a544e59d61d512017da47e }}/backend:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile }}
+        images: 'genaiacr1281.azurecr.io/${{ secrets.AzureAppService_ContainerUsername }}/backend:${{ github.sha }}'
